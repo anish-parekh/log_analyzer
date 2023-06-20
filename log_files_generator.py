@@ -17,13 +17,74 @@ error_logs = [
     "SEVERE: Error parsing XML configuration file\norg.xml.sax.SAXParseException: The element type 'property' must be terminated by the matching end-tag '</property>'\n    at org.apache.xerces.parsers.DOMParser.parse(Unknown Source)\n    at org.apache.xerces.jaxp.DocumentBuilderImpl.parse(Unknown Source)"
 ]
 
+normal_logs = [
+    "INFO: Application started",
+    "DEBUG: Database connection established",
+    "WARNING: Disk space running low",
+    "INFO: User logged in",
+    "DEBUG: API request received",
+    "INFO: Task completed successfully",
+    "DEBUG: Cache invalidated",
+    "INFO: Configuration loaded",
+    "DEBUG: Service started",
+    "INFO: Resource accessed",
+    "DEBUG: Request processing started",
+    "WARNING: Network connection unstable",
+    "INFO: Server restarted",
+    "DEBUG: User session created",
+    "INFO: Log file rotated",
+    "DEBUG: Data transformation in progress",
+    "WARNING: System performance degraded",
+    "INFO: Email sent",
+    "DEBUG: External service response received",
+    "INFO: Task scheduled",
+    "DEBUG: Request validation passed",
+    "INFO: Operation completed",
+    "DEBUG: Data synchronization started",
+    "INFO: User profile updated",
+    "DEBUG: API response sent",
+    "WARNING: Missing configuration parameter",
+    "INFO: Backup created",
+    "DEBUG: File uploaded",
+    "INFO: Resource deleted",
+    "DEBUG: Request rate limited",
+    "INFO: Server running in production mode",
+    "DEBUG: Data encryption in progress",
+    "INFO: Task aborted",
+    "DEBUG: External dependency loaded",
+    "INFO: Resource not found",
+    "DEBUG: Request forwarded to backend",
+    "WARNING: Unhandled exception caught",
+    "INFO: Task initiated",
+    "DEBUG: External dependency initialized",
+    "INFO: Cache refreshed",
+    "DEBUG: Data compression started",
+    "INFO: Shutdown initiated",
+    "DEBUG: Response formatting in progress",
+    "INFO: User registered",
+    "DEBUG: Database backup in progress",
+    "INFO: Health check passed",
+    "DEBUG: File downloaded",
+    "INFO: System update available",
+    "DEBUG: External dependency unavailable",
+    "INFO: Task started",
+    "DEBUG: Request throttled",
+    "INFO: Service stopped",
+    "DEBUG: Data validation in progress",
+    "INFO: Resource not modified",
+    "DEBUG: Request handling completed",
+    "INFO: Configuration updated",
+    "DEBUG: API rate limit exceeded"
+]
+
+
 # Create a directory for the process logs if it doesn't exist
 process_logs_directory = os.path.join(log_directory, process_name)
 if not os.path.exists(process_logs_directory):
     os.makedirs(process_logs_directory)
 
 # Generate log files with real log messages and stop after an error occurs
-for i in range(1, num_log_files+1):
+for i in range(1, num_log_files + 1):
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     log_file_path = os.path.join(process_logs_directory, f"log_{timestamp}.txt")
 
@@ -32,6 +93,12 @@ for i in range(1, num_log_files+1):
         log_file.write(f"{datetime.datetime.now()} - INFO: Starting process {process_name}...\n")
         log_file.write(f"{datetime.datetime.now()} - INFO: Process {process_name} initialized.\n")
         log_file.write(f"{datetime.datetime.now()} - DEBUG: Processing data...\n")
+
+        # Generate a random number of log entries before the error log
+        num_entries_before_error = random.randint(10, 50)
+        for _ in range(num_entries_before_error):
+            log_entry = random.choice(normal_logs)
+            log_file.write(f"{datetime.datetime.now()} - {log_entry}\n")
 
         # Check if an error should occur
         should_error_occur = random.choice([True, False])
